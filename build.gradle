@@ -1,0 +1,35 @@
+plugins {
+    id 'java' // or 'groovy' Must be explicitly applied
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id 'maven-publish'
+}
+
+sourceCompatibility = 1.7
+version = '1.0'
+group = 'sk.seky.resteasy'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Resteasy
+	compile(group: 'org.jboss.resteasy', name: 'resteasy-guice', version: '3.0.17.Final')
+
+    // Quartz
+	compile ('org.quartz-scheduler:quartz:2.2.2')
+}
+
+shadowJar {
+    baseName = 'resteasy-quartz'
+    classifier = ''
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) {
+            from components.shadow
+            artifactId = 'resteasy-quartz'
+        }
+    }
+}
